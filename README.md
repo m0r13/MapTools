@@ -2,11 +2,13 @@
 
 MapTools is a small Bukkit plugin to provide additional informations from a
 Minecraft Server to a map rendered with tools such as
-[mapcrafter]{http://github.com/m0r13/mapcrafter}. The plugin writes every few
-seconds a JSON-File with informations about the players (position; which world
-they are playing) to the filesystem.
+[mapcrafter](http://github.com/m0r13/mapcrafter). The plugin writes every few
+seconds a JSON-File with informations about the players (for example their position) 
+to the filesystem.
 
 MapTools is free software and available under the GPL license.
+
+## Configuration ##
 
 You can specify a few options in the configuration file (`config.yml`):
 
