@@ -51,11 +51,6 @@ public class MarkerUpdateTask extends BukkitRunnable {
             JSONObject json = new JSONObject();
 
             Location pos = player.getLocation();
-            World world = player.getWorld();
-            if (world.getEnvironment() == Environment.NETHER) {
-                pos.setX(pos.getX() * 8);
-                pos.setZ(pos.getZ() * 8);
-            }
 
             json.put("username", player.getName());
             json.put("x", pos.getX());
