@@ -61,6 +61,18 @@ public class MarkerUpdateTask extends BukkitRunnable {
             json.put("dimension", world.getEnvironment().toString());
             json.put("health", player.getHealth());
             json.put("saturation", player.getSaturation());
+            json.put("food", player.getFoodLevel());
+            Location bed = player.getBedSpawnLocation();
+            if (bed == null) {
+                json.put("bed", null);
+            } else {
+                JSONArray bedJson = new JSONArray();
+                bedJson.add(bed.getBlockX());
+                bedJson.add(bed.getBlockY());
+                bedJson.add(bed.getBlockZ());
+                json.put("bed", bedJson);
+            }
+            json.put("level", (float)player.getLevel() + player.getExp());
             playersJson.add(json);
         }
         JSONObject json = new JSONObject();
