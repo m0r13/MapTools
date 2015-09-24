@@ -19,13 +19,14 @@
 
 package me.m0r13.maptools;
 
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.logging.Logger;
 
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class MapToolsPlugin extends JavaPlugin {
-
     private Logger log;
 
     @Override
@@ -44,7 +45,8 @@ public class MapToolsPlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         // write an empty json file
-        new MarkerUpdateTask(this).writePlayers(new Player[] {});
+    	Collection<Player> players = new LinkedList<Player>();
+        new MarkerUpdateTask(this).writePlayers(players);
 
         log.info("Plugin disabled!");
     }

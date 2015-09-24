@@ -23,31 +23,31 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collection;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.World.Environment;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitScheduler;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class MarkerUpdateTask extends BukkitRunnable {
-
     private MapToolsPlugin plugin;
 
     public MarkerUpdateTask(MapToolsPlugin plugin) {
         this.plugin = plugin;
     }
 
-    @Override
     public void run() {
         writePlayers(plugin.getServer().getOnlinePlayers());
     }
 
-    public void writePlayers(Player[] players) {
+    public void writePlayers(Collection<? extends Player> collection) {
         JSONArray playersJson = new JSONArray();
-        for (Player player : players) {
+        for (Player player : collection) {
             JSONObject json = new JSONObject();
 
             Location pos = player.getLocation();
@@ -75,16 +75,22 @@ public class MarkerUpdateTask extends BukkitRunnable {
             json.put("level", (float)player.getLevel() + player.getExp());
             playersJson.add(json);
         }
-        JSONObject json = new JSONObject();
+        final JSONObject json = new JSONObject();
         json.put("players", playersJson);
-
-        try {
-            File file = new File(plugin.getConfig().getString("markerFile"));
-            BufferedWriter output = new BufferedWriter(new FileWriter(file));
-            output.write(json.toJSONString());
-            output.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        
+        BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
+        scheduler.runTaskAsynchronously(plugin, new Runnable() {
+        	@Override
+        	public void run() {
+        		try {
+                    File file = new File(plugin.getConfig().getString("markerFile"));
+                    BufferedWriter output = new BufferedWriter(new FileWriter(file));
+                    output.write(json.toJSONString());
+                    output.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+        	}
+        });
     }
 }
