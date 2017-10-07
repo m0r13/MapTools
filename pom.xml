@@ -41,7 +41,7 @@
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
             <!-- Bukkit API Version, change if out dated -->
-            <version>1.10-R0.1-SNAPSHOT</version>
+            <version>1.12.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
             <type>jar</type>
         </dependency>
