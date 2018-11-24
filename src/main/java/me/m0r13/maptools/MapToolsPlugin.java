@@ -33,8 +33,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class MapToolsPlugin extends JavaPlugin {
     private Logger log;
-	
-	private MarkerUpdateTask task;
+    private MarkerUpdateTask task;
 
     @Override
     public void onEnable() {
@@ -51,20 +50,20 @@ public class MapToolsPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-		// Making sure we cancel the task, so there are no aditional task registerings while the server is stopping/stopping plugin
-		if (task != null) {
+	// Making sure we cancel the task, so there are no aditional task registerings while the server is stopping/stopping plugin
+	if (task != null) {
             task.cancel();
         }
 		
-		try {
-			// write an empty json file
-			File file = new File(getConfig().getString("markerFile"));
-			BufferedWriter output = new BufferedWriter(new FileWriter(file));
-			output.write("{\"players\":[]}");
-			output.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	try {
+	    // write an empty json file
+	    File file = new File(getConfig().getString("markerFile"));
+	    BufferedWriter output = new BufferedWriter(new FileWriter(file));
+	    output.write("{\"players\":[]}");
+	    output.close();
+	} catch (IOException e) {
+	    e.printStackTrace();
+	}
 
         log.info("Plugin disabled!");
     }
